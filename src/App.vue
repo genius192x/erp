@@ -172,7 +172,7 @@ const defaultLayout = [265, 440, 655]
                             </div>
                         </div>
                     </div>
-                    <div class="flex-1 space-y-4 p-8 pt-6">
+                    <div class="flex-1 space-y-4 p-2 pt-6 md:p-8">
                         <div class="flex items-center justify-between space-y-2">
                             <h2 class="text-3xl font-bold tracking-tight">
                                 Dashboard
@@ -282,7 +282,7 @@ const defaultLayout = [265, 440, 655]
                                         </CardContent>
                                     </Card>
                                 </div>
-                                <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+                                <div class="grid gap-4 grid-cols-4 md:grid-cols-2 lg:grid-cols-7">
                                     <Card class="col-span-4">
                                         <CardHeader>
                                             <CardTitle>Overview</CardTitle>
@@ -303,6 +303,16 @@ const defaultLayout = [265, 440, 655]
                                         </CardContent>
                                     </Card>
                                 </div>
+                            </TabsContent>
+                            <TabsContent value="analytics" class="space-y-4">
+                                <Card class="col-span-4">
+                                    <CardHeader>
+                                        <CardTitle>Overview</CardTitle>
+                                    </CardHeader>
+                                    <CardContent class="pl-2">
+                                        <Overview />
+                                    </CardContent>
+                                </Card>
                             </TabsContent>
                         </Tabs>
                     </div>

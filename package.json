@@ -1,12 +1,15 @@
 {
   "name": "erp",
   "private": true,
+  "homepage": "https://genius192x.github.io/erp/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist",
+    "predeploy": "npm run build"
   },
   "dependencies": {
     "@iconify/vue": "^4.1.2",
