@@ -7,6 +7,7 @@ import Search from '@/components/Search.vue'
 import UserNav from '@/components/UserNav.vue'
 import Nav from '@/components/Nav.vue'
 import { Button } from '@/components/ui/button'
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import {
     Card,
     CardContent,
@@ -112,7 +113,7 @@ const defaultLayout = [265, 440, 655]
         <ResizablePanelGroup
             id="resize-panel-group-1"
             direction="horizontal"
-            class="h-full max-h-[800px] items-stretch"
+            class="h-full items-stretch"
         >
             <ResizablePanel
             id="resize-panel-1"
@@ -121,6 +122,7 @@ const defaultLayout = [265, 440, 655]
             collapsible
             :min-size="15"
             :max-size="20"
+            class="hidden md:block"
             :class="cn(isCollapsed && 'min-w-[50px] transition-all duration-300 ease-in-out')"
             @expand="onExpand"
             @collapse="onCollapse"
@@ -135,12 +137,35 @@ const defaultLayout = [265, 440, 655]
                 :links="links2"
             />
             </ResizablePanel>
-            <ResizableHandle id="resize-handle-1" with-handle />
+            <ResizableHandle id="resize-handle-1" with-handle class="hidden md:block" />
             <ResizablePanel id="resize-panel-3" :default-size="defaultLayout[2]">
                 <div class=" flex-col md:flex">
                     <div class="border-b">
-                        <div class="flex h-16 items-center px-4">
-                            <MainNav class="mx-6" />
+                        <div class="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+                            <MainNav class="mx-6 hidden md:block" />
+                            <Sheet>
+                                <SheetTrigger as-child>
+                                    <Button
+                                        variant="outline"
+                                        size="icon"
+                                        class="shrink-0 md:hidden"
+                                    >
+                                        <Menu class="h-5 w-5" />
+                                        <span class="sr-only">Toggle navigation menu</span>
+                                    </Button>
+                                </SheetTrigger>
+                                <SheetContent side="left" class="flex flex-col">
+                                    <Nav
+                                        :is-collapsed="isCollapsed"
+                                        :links="links"
+                                    />
+                                    <Separator />
+                                    <Nav
+                                        :is-collapsed="isCollapsed"
+                                        :links="links2"
+                                    />
+                                </SheetContent>
+                                </Sheet>
                             <div class="ml-auto flex items-center space-x-4">
                                 <Search />
                                 <UserNav />
@@ -266,7 +291,7 @@ const defaultLayout = [265, 440, 655]
                                             <Overview />
                                         </CardContent>
                                     </Card>
-                                    <Card class="col-span-3">
+                                    <Card class="col-span-4 md:col-span-3">
                                         <CardHeader>
                                             <CardTitle>Recent Sales</CardTitle>
                                             <CardDescription>
