@@ -1,8 +1,8 @@
 <script setup  >
 import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
+	Avatar,
+	AvatarFallback,
+	AvatarImage,
 } from '@/components/ui/avatar'
 </script>
 

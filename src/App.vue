@@ -1,32 +1,15 @@
 <script setup lang="ts">
 import { cn } from '@/lib/utils'
-import {ref} from 'vue'
-import Overview from '@/components/Overview.vue'
+import { ref } from 'vue'
 import MainNav from '@/components/MainNav.vue'
-import RecentSales from '@/components/RecentSales.vue'
 import Search from '@/components/Search.vue'
 import UserNav from '@/components/UserNav.vue'
 import Nav from '@/components/Nav.vue'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card'
-import {
-    Tabs,
-    TabsContent,
-    TabsList,
-    TabsTrigger,
-} from '@/components/ui/tabs'
 
-import { Separator } from '@/components/ui/separator'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
-import DashBoard from '@/pages/DashBoard.vue'
 
 interface collapsedProps {
 	defaultLayout?: number[]
@@ -44,7 +27,7 @@ const links = [
 		link: '/',
         label: '128',
         icon: 'lucide:home',
-        variant: 'default',
+        variant: 'ghost',
     },
     {
 		title: 'Задачи',
@@ -110,11 +93,6 @@ const defaultLayout = [20, 80]
                                     <Nav
                                         :is-collapsed="isCollapsed"
                                         :links="links"
-                                    />
-                                    <Separator />
-                                    <Nav
-                                        :is-collapsed="isCollapsed"
-                                        :links="links2"
                                     />
                                 </SheetContent>
                                 </Sheet>

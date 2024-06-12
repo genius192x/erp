@@ -30,7 +30,10 @@ defineProps<NavProps>()
             <template v-for="(link, index) of links">
                 <Tooltip v-if="isCollapsed" :key="`1-${index}`" :delay-duration="0">
                     <TooltipTrigger as-child>
-						<router-link :to=link.link :class="cn(
+						<router-link
+							:to=link.link
+							activeClass="text-primary-foreground bg-primary hover:bg-primary/90 hover:text-white"
+							:class="cn(
 							buttonVariants({ variant: link.variant, size: 'icon' }),
 							'h-9 w-9',
 							link.variant === 'default'
@@ -55,7 +58,11 @@ defineProps<NavProps>()
                     </TooltipContent>
                 </Tooltip>
 
-                <router-link v-else :key="`2-${index}`" :to=link.link :class="cn(
+                <router-link v-else
+					activeClass="text-primary-foreground bg-primary hover:bg-primary/90 hover:text-white"
+					:key="`2-${index}`"
+					:to=link.link
+					:class="cn(
                     buttonVariants({ variant: link.variant, size: 'sm' }),
                     link.variant === 'default'
                     && 'dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white',
