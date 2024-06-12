@@ -1,22 +1,82 @@
-<script setup  >
+<script setup lang="ts">
 import { BarChart } from '@/components/ui/chart-bar'
-
-const data = [
-  { name: 'Jan', total: Math.floor(Math.random() * 5000) + 1000 },
-  { name: 'Feb', total: Math.floor(Math.random() * 5000) + 1000 },
-  { name: 'Mar', total: Math.floor(Math.random() * 5000) + 1000 },
-  { name: 'Apr', total: Math.floor(Math.random() * 5000) + 1000 },
-  { name: 'May', total: Math.floor(Math.random() * 5000) + 1000 },
-  { name: 'Jun', total: Math.floor(Math.random() * 5000) + 1000 },
-  { name: 'Jul', total: Math.floor(Math.random() * 5000) + 1000 },
-  { name: 'Aug', total: Math.floor(Math.random() * 5000) + 1000 },
-  { name: 'Sep', total: Math.floor(Math.random() * 5000) + 1000 },
-  { name: 'Oct', total: Math.floor(Math.random() * 5000) + 1000 },
-  { name: 'Nov', total: Math.floor(Math.random() * 5000) + 1000 },
-  { name: 'Dec', total: Math.floor(Math.random() * 5000) + 1000 },
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from '@/components/ui/card'
+const data =
+[
+	{
+		name: 'Январь',
+		'Доход': Math.floor(Math.random() * 5000) + 1000,
+		'Расход': Math.floor(Math.random() * 5000) + 1000
+	},
+	{
+		name: 'Февраль',
+		'Доход': Math.floor(Math.random() * 5000) + 1000,
+		'Расход': Math.floor(Math.random() * 5000) + 1000
+	},
+	{
+		name: 'Март',
+		'Доход': Math.floor(Math.random() * 5000) + 1000,
+		'Расход': Math.floor(Math.random() * 5000) + 1000
+	},
+	{
+		name: 'Апрель',
+		'Доход': Math.floor(Math.random() * 5000) + 1000,
+		'Расход': Math.floor(Math.random() * 5000) + 1000
+	},
+	{
+		name: 'Май',
+		'Доход': Math.floor(Math.random() * 5000) + 1000,
+		'Расход': Math.floor(Math.random() * 5000) + 1000
+	},
+	{
+		name: 'Июнь',
+		'Доход': Math.floor(Math.random() * 5000) + 1000,
+		'Расход': Math.floor(Math.random() * 5000) + 1000
+	},
+	{
+		name: 'Июль',
+		'Доход': Math.floor(Math.random() * 5000) + 1000,
+		'Расход': Math.floor(Math.random() * 5000) + 1000
+	},
+	{
+		name: 'Август',
+		'Доход': Math.floor(Math.random() * 5000) + 1000,
+		'Расход': Math.floor(Math.random() * 5000) + 1000
+	},
+	{
+		name: 'Сентябрь',
+		'Доход': Math.floor(Math.random() * 5000) + 1000,
+		'Расход': Math.floor(Math.random() * 5000) + 1000
+	},
+	{
+		name: 'Октябрь',
+		'Доход': Math.floor(Math.random() * 5000) + 1000,
+		'Расход': Math.floor(Math.random() * 5000) + 1000
+	},
+	{
+		name: 'Ноябрь',
+		'Доход': Math.floor(Math.random() * 5000) + 1000,
+		'Расход': Math.floor(Math.random() * 5000) + 1000
+	},
+	{
+		name: 'Декабрь',
+		'Доход': Math.floor(Math.random() * 5000) + 1000,
+		'Расход': Math.floor(Math.random() * 5000) + 1000
+	},
 ]
 </script>
 
 <template>
-  <BarChart :data="data" :categories="['total']" :index="'name'" :rounded-corners="4" />
+	<CardHeader>
+		<CardTitle>Отчет за год</CardTitle>
+	</CardHeader>
+	<CardContent class="pl-2">
+		<BarChart :data="data" :categories="['Доход', 'Расход']" :index="'name'" :rounded-corners="4" />
+	</CardContent>
 </template>

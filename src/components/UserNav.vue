@@ -23,7 +23,7 @@ import {
         <Button variant="ghost" class="relative h-8 w-8 rounded-full">
             <Avatar class="h-8 w-8">
             <AvatarImage src="/avatars/01.png" alt="@shadcn" />
-            <AvatarFallback>SC</AvatarFallback>
+            <AvatarFallback>АЗ</AvatarFallback>
             </Avatar>
         </Button>
         </DropdownMenuTrigger>
@@ -31,32 +31,31 @@ import {
         <DropdownMenuLabel class="font-normal flex">
             <div class="flex flex-col space-y-1">
             <p class="text-sm font-medium leading-none">
-                shadcn
+                Антон Зимин
             </p>
             <p class="text-xs leading-none text-muted-foreground">
-                m@example.com
+                zimin@gmail.com
             </p>
             </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
             <DropdownMenuItem>
-            Profile
+            Профиль
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
             <DropdownMenuItem>
-            Billing
+            Счета
             <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
             </DropdownMenuItem>
             <DropdownMenuItem>
-            Settings
+            Настройки
             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
             </DropdownMenuItem>
-            <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-            Log out
+            Выйти
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
         </DropdownMenuContent>
