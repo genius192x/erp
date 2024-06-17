@@ -22,7 +22,7 @@ import {
             </p>
         </div>
         <div class="ml-auto font-medium">
-            +$1,999.00
+            +1,999.00 ₽
         </div>
         </div>
         <div class="flex items-center">
@@ -39,7 +39,7 @@ import {
             </p>
         </div>
         <div class="ml-auto font-medium">
-            +$39.00
+            +3,900.00 ₽
         </div>
         </div>
         <div class="flex items-center">
@@ -56,7 +56,7 @@ import {
             </p>
         </div>
         <div class="ml-auto font-medium">
-            +$299.00
+            + 2,990.00 ₽
         </div>
         </div>
         <div class="flex items-center">
@@ -73,7 +73,7 @@ import {
             </p>
         </div>
         <div class="ml-auto font-medium">
-            +$99.00
+            +990.00 ₽
         </div>
         </div>
         <div class="flex items-center">
@@ -90,7 +90,7 @@ import {
             </p>
         </div>
         <div class="ml-auto font-medium">
-            +$39.00
+            +3,900.00 ₽
         </div>
         </div>
     </div>

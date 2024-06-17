@@ -39,16 +39,9 @@ defineProps<NavProps>()
 							link.variant === 'default'
 							&& 'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white',
 						)">
-							<Icon :icon="link.icon" class="size-4" />
+							<Icon v-if="link.icon" :icon="link.icon" class="size-4" />
 							<span class="sr-only">{{ link.title }}</span>
 						</router-link>
-                        <!-- <a href="#" :class="cn(
-                            buttonVariants({ variant: link.variant, size: 'icon' }),
-                            'h-9 w-9',
-                            link.variant === 'default'
-                            && 'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white',
-                        )">
-                        </a> -->
                     </TooltipTrigger>
                     <TooltipContent side="right" class="flex items-center gap-4">
                         {{ link.title }}
@@ -68,7 +61,7 @@ defineProps<NavProps>()
                     && 'dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white',
                     'justify-start',
                 )">
-                    <Icon :icon="link.icon" class="mr-2 size-4" />
+                    <Icon v-if="link.icon" :icon="link.icon" class="mr-2 size-4" />
                     {{ link.title }}
                     <span v-if="link.label" :class="cn(
                         'ml-auto',

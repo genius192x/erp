@@ -41,16 +41,19 @@ import {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
             <DropdownMenuItem>
-            Профиль
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+              <router-link to="/settings">Профиль
+                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+              </router-link>
             </DropdownMenuItem>
             <DropdownMenuItem>
             Счета
             <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
             </DropdownMenuItem>
             <DropdownMenuItem>
-            Настройки
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+              <router-link to="/settings">
+                Настройки
+                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+              </router-link>
             </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
