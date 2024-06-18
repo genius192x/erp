@@ -35,9 +35,9 @@ export const columns: ColumnDef<Task>[] = [
 		cell: ({ row }) => {
 		const label = labels.find(label => label.value === row.original.label)
 
-		return h('div', { class: 'flex space-x-2 min-w-20' }, [
+		return h('div', { class: 'flex space-x-2 min-w-20 items-start' }, [
 			label ? h(Badge, { variant: 'outline' }, () => label.label) : null,
-			h('span', { class: 'max-w-[500px]  truncate font-medium' }, row.getValue('title')),
+			h('p', { class: 'line-clamp-1  font-medium' }, row.getValue('title')),
 		])
 		},
 	},

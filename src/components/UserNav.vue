@@ -22,7 +22,7 @@ import {
         <DropdownMenuTrigger as-child>
         <Button variant="ghost" class="relative h-8 w-8 rounded-full">
             <Avatar class="h-8 w-8">
-            <AvatarImage src="/avatars/01.png" alt="@shadcn" />
+            <AvatarImage src="src/assets/avatars/04.png" alt="@shadcn" />
             <AvatarFallback>АЗ</AvatarFallback>
             </Avatar>
         </Button>
@@ -42,24 +42,24 @@ import {
         <DropdownMenuGroup>
             <DropdownMenuItem>
               <router-link to="/settings">Профиль
-                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+<!--                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>-->
               </router-link>
             </DropdownMenuItem>
             <DropdownMenuItem>
             Счета
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+<!--            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>-->
             </DropdownMenuItem>
             <DropdownMenuItem>
               <router-link to="/settings">
                 Настройки
-                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+<!--                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>-->
               </router-link>
             </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
             Выйти
-            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+<!--            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>-->
         </DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>

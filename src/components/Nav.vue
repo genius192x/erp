@@ -52,15 +52,15 @@ defineProps<NavProps>()
                 </Tooltip>
 
                 <router-link v-else
-					activeClass="text-primary-foreground bg-primary hover:bg-primary/90 hover:text-white"
-					:key="`2-${index}`"
-					:to=link.link
-					:class="cn(
-                    buttonVariants({ variant: link.variant, size: 'sm' }),
-                    link.variant === 'default'
-                    && 'dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white',
-                    'justify-start',
-                )">
+                  activeClass="text-primary-foreground bg-primary hover:bg-primary/90 hover:text-white"
+                  :key="`2-${index}`"
+                  :to=link.link
+                  :class="cn(
+                      buttonVariants({ variant: link.variant, size: 'sm' }),
+                      link.variant === 'default'
+                      && 'dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white',
+                      'justify-start',
+                    )">
                     <Icon v-if="link.icon" :icon="link.icon" class="mr-2 size-4" />
                     {{ link.title }}
                     <span v-if="link.label" :class="cn(

@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 	<div>
 		<Input
 		type="search"
-		placeholder="Search..."
+		placeholder="Поиск..."
 		class="md:w-[300px] lg:w-[350px]"
 		/>
 	</div>

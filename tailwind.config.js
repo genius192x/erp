@@ -89,5 +89,7 @@ module.exports = {
       },
     },
   },
-  plugins: [animate],
+  plugins: [
+      animate,
+  ]
 }

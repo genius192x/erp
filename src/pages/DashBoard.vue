@@ -26,7 +26,7 @@ onMounted(() => {
 
   gsap.from(nums, {
     textContent: 0,
-    duration: 3,
+    duration: 2,
     snap: { textContent: 1 },
     // stagger: 1,
     // onUpdate: textContent.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
@@ -41,33 +41,33 @@ onMounted(() => {
 			<h2 class="text-3xl font-bold tracking-tight">
 				Статистика
 			</h2>
-			<div class="flex items-center space-y-1 flex-wrap md:space-x-2">
+			<div class="flex items-center gap-2 flex-wrap md:space-x-2">
         <DateRangePicker/>
-				<Button @click="() => {
+				<Button class="m-0" @click="() => {
           toast('Скачали статистику за указанный период', {
-            description: 'Sunday, December 03, 2023 at 9:00 AM',
+            description: '20 янв. 2023 г. - 9 февр. 2023 г.',
             action: {
-              label: 'Undo',
+              label: 'Ок',
               onClick: () => console.log('Ок'),
             },
           })
-        }">Download</Button>
+        }">Скачать</Button>
         <Toaster />
 			</div>
 		</div>
 		<Tabs default-value="overview" class="space-y-1 md:space-y-4 overflow-hidden">
 			<TabsList class="overflow-auto">
 				<TabsTrigger value="overview">
-					Overview
+					Общее
 				</TabsTrigger>
 				<TabsTrigger value="analytics" >
-					Analytics
+					Финансы
 				</TabsTrigger>
 				<TabsTrigger value="reports" >
-					Reports
+					Отчеты
 				</TabsTrigger>
 				<TabsTrigger value="notifications" >
-					Notifications
+					Уведомления
 				</TabsTrigger>
 			</TabsList>
 			<TabsContent value="overview" class="space-y-4">
@@ -95,7 +95,7 @@ onMounted(() => {
 					<Card>
 						<CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
 							<CardTitle class="text-sm font-medium">
-								Subscriptions
+								Посетителей
 							</CardTitle>
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -107,10 +107,10 @@ onMounted(() => {
 						</CardHeader>
 						<CardContent>
 							<div class="text-2xl font-bold">
-                + <span class="anim-num">2350</span> ₽
+                +<span class="anim-num">340</span>
 							</div>
 							<p class="text-xs text-muted-foreground">
-								+180.1% относительно прошлого месяца
+								+18.1% относительно прошлого месяца
 							</p>
 						</CardContent>
 					</Card>
@@ -128,7 +128,7 @@ onMounted(() => {
 						</CardHeader>
 						<CardContent>
 							<div class="text-2xl font-bold">
-                + <span class="anim-num">122</span>
+                +<span class="anim-num">420</span>
 							</div>
 							<p class="text-xs text-muted-foreground">
 								+19% относительно прошлого месяца
@@ -138,7 +138,7 @@ onMounted(() => {
 					<Card>
 						<CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
 							<CardTitle class="text-sm font-medium">
-								Active Now
+								Посетителей в день
 							</CardTitle>
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
 								stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -148,10 +148,10 @@ onMounted(() => {
 						</CardHeader>
 						<CardContent>
 							<div class="text-2xl font-bold">
-                + <span class="anim-num">573</span> ₽
+                <span class="anim-num">30</span>
 							</div>
 							<p class="text-xs text-muted-foreground">
-								+201 since last hour
+								+5 относительно прошлого месяца
 							</p>
 						</CardContent>
 					</Card>
@@ -178,6 +178,15 @@ onMounted(() => {
 					<Overview />
 				</Card>
 			</TabsContent>
+      <TabsContent value="reports" class="space-y-4">
+        <Card class="col-span-4 p-5">
+          <span class="">Тут будут отчеты</span>
+        </Card>
+      </TabsContent><TabsContent value="notifications" class="space-y-4">
+        <Card class="col-span-4 p-5">
+          <span class="">Тут будут уведомления</span>
+        </Card>
+      </TabsContent>
 		</Tabs>
 	</div>
 </template>

@@ -1,21 +1,38 @@
 <script setup lang="ts">
 import { cn } from '@/lib/utils'
-import { ref } from 'vue'
+import {onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import Search from '@/components/Search.vue'
 import UserNav from '@/components/UserNav.vue'
 import Nav from '@/components/Nav.vue'
 import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet'
 
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
 
 import { useGlobalStore } from '@/store/GlobalStore'
+import router from './router'
+import {useRoute} from "vue-router";
 const globalStore = useGlobalStore()
 const { isSettingsOpen } = storeToRefs(globalStore)
 
-console.log(globalStore.isSettingsOpen)
+
+const route = useRoute()
+
+
+watch(route, (to) => {
+  globalStore.isSheetOpen = false
+})
+
+onMounted(() => {
+  const currPath = window.location.hash;
+  if(currPath.includes('settings')){
+    console.log(currPath)
+    globalStore.isSettingsOpen = true
+  }
+  console.log(globalStore.isSettingsOpen)
+})
 
 interface collapsedProps {
 	defaultLayout?: number[]
@@ -45,31 +62,25 @@ const links = [
 ]
 const settingsLinks =[
   {
-    title: 'Назад',
-    link: '/',
-    // icon: 'lucide:home',
-    variant: 'ghost',
-  },
-  {
     title: 'Настройки профиля',
     link: '/settings',
-    // icon: 'lucide:home',
+    icon: 'gravity-ui:person-gear',
     variant: 'ghost',
   },
   {
     title: 'Внешний вид',
     link: '/settings/appearance',
-    // icon: 'lucide:clipboard-edit',
+    icon: 'pajamas:appearance',
     variant: 'ghost',
   },{
     title: 'Отображение',
     link: '/settings/display',
-    // icon: 'lucide:clipboard-edit',
+    icon: 'fa6-solid:display',
     variant: 'ghost',
   },{
     title: 'Уведомления',
     link: '/settings/notifications',
-    // icon: 'lucide:clipboard-edit',
+    icon: 'material-symbols:edit-notifications-outline-sharp',
     variant: 'ghost',
   },
 ]
@@ -106,13 +117,16 @@ const defaultLayout = [20, 80]
               <Nav
                 :is-collapsed="isCollapsed"
                 :links="links"
-                class="relative top-0 left-0 z-10 transition-all duration-1000 ease-in-out"
-                :class="{ 'realtive top-0 -left-80 z-10': globalStore.isSettingsOpen }"
-              /><Nav
+                class="relative z-10 transition-all duration-500 ease-in-out translate-x-0"
+              />
+              <Nav
                 :is-collapsed="isCollapsed"
                 :links="settingsLinks"
-                class="absolute top-0 left-0 z-0 transition-all duration-1000 ease-in-out"
-                :class="{ 'absolute top-0 left-96': !globalStore.isSettingsOpen }"
+                class="relative z-20 transition-all duration-500 ease-in-out -translate-y-12  bg-white"
+                :class=
+                  "{ 'relative translate-x-0': globalStore.isSettingsOpen,
+                    'translate-x-full' : !globalStore.isSettingsOpen
+                  }"
               />
             </ResizablePanel>
             <ResizableHandle id="resize-handle-1" with-handle class="hidden md:flex z-30" />
@@ -120,29 +134,31 @@ const defaultLayout = [20, 80]
                 <div class=" flex-col md:flex">
                     <div class="border-b">
                         <div class="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-                            <Sheet>
-                                <SheetTrigger as-child>
+                            <Sheet :open=globalStore.isSheetOpen>
+                                <SheetTrigger as-child @click="globalStore.isSheetOpen=true">
                                     <Button
                                         variant="outline"
                                         size="icon"
                                         class="shrink-0 md:hidden"
                                     >
-<!--                                        <Menu class="h-5 w-5" />-->
                                         <span class="sr-only">Toggle navigation menu</span>
                                     </Button>
                                 </SheetTrigger>
-                                <SheetContent side="left" class="flex flex-col">
-                                    <Nav
-                                        :is-collapsed="isCollapsed"
-                                        :links="links"
-                                        class="relative top-0 left-0 z-10 transition-all duration-1000 ease-in-out"
-                                        :class="{ 'realtive top-0 -left-80 z-10': globalStore.isSettingsOpen }"
-                                    /><Nav
-                                        :is-collapsed="isCollapsed"
-                                        :links="settingsLinks"
-                                        class="absolute top-0 left-0 z-0 block transition-all duration-1000 ease-in-out"
-                                        :class="{ 'absolute top-0 left-96 hidden': !globalStore.isSettingsOpen }"
-                                    />
+                                <SheetContent side="left" class="flex flex-col overflow-hidden">
+                                  <Nav
+                                      :is-collapsed="isCollapsed"
+                                      :links="links"
+                                      class="relative z-10 transition-all duration-1000 ease-in-out translate-x-0"
+                                  />
+                                  <Nav
+                                      :is-collapsed="isCollapsed"
+                                      :links="settingsLinks"
+                                      class="relative z-20 transition-all duration-500 ease-in-out -translate-y-16  bg-white"
+                                      :class=
+                                          "{ 'relative translate-x-0': globalStore.isSettingsOpen,
+                                            'translate-x-[120%]' : !globalStore.isSettingsOpen
+                                          }"
+                                  />
                                 </SheetContent>
                                 </Sheet>
                             <div class="ml-auto flex items-center space-x-4 relative z-20">
