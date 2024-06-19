@@ -2,6 +2,7 @@
 import { cn } from '@/lib/utils'
 import {onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
+import {Menu} from 'lucide-vue-next'
 import Search from '@/components/Search.vue'
 import UserNav from '@/components/UserNav.vue'
 import Nav from '@/components/Nav.vue'
@@ -141,10 +142,11 @@ const defaultLayout = [20, 80]
                                         size="icon"
                                         class="shrink-0 md:hidden"
                                     >
+                                        <Menu class="h-5 w-5" />
                                         <span class="sr-only">Toggle navigation menu</span>
                                     </Button>
                                 </SheetTrigger>
-                                <SheetContent side="left" class="flex flex-col overflow-hidden">
+                                <SheetContent side="left" class="flex flex-col">
                                   <Nav
                                       :is-collapsed="isCollapsed"
                                       :links="links"
@@ -156,7 +158,7 @@ const defaultLayout = [20, 80]
                                       class="relative z-20 transition-all duration-500 ease-in-out -translate-y-16  bg-white"
                                       :class=
                                           "{ 'relative translate-x-0': globalStore.isSettingsOpen,
-                                            'translate-x-[120%]' : !globalStore.isSettingsOpen
+                                            'translate-x-[150%] hidden' : !globalStore.isSettingsOpen
                                           }"
                                   />
                                 </SheetContent>
