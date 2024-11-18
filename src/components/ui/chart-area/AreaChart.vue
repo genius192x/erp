@@ -5,7 +5,7 @@ import { Area, Axis, Line } from '@unovis/ts'
 import { type Component, computed, ref } from 'vue'
 import { useMounted } from '@vueuse/core'
 import type { BaseChartProps } from '.'
-import { ChartCrosshair, ChartLegend, defaultColors } from '@/lib/registry/default/ui/chart'
+import { ChartCrosshair, ChartLegend, defaultColors } from '@/components/ui/chart'
 import { cn } from '@/lib/utils'
 
 const props = withDefaults(defineProps<BaseChartProps<T> & {

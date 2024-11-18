@@ -7,11 +7,24 @@ import SettingAccount from "@/pages/settings/SettingAccount.vue"
 import SettingAppearance from "@/pages/settings/SettingAppearance.vue"
 import SettingDisplay from "@/pages/settings/SettingDisplay.vue"
 import SettingNotifications from "@/pages/settings/SettingNotifications.vue"
+import Authorization from '@/pages/Authorization.vue'
+import Registration from '@/pages/Registration.vue'
+import path from 'path'
 
 const routes = [
 	{
 		path: "/",
 		component: DashBoardView,
+	},
+	{
+		path: "/auth",
+		name:"auth",
+		component: Authorization,
+	},
+	{
+		path: "/registration",
+		name: "registration",
+		component: Registration,
 	},
 	{
 		path: '/tasks',
@@ -36,13 +49,19 @@ const router = createRouter({
 	history: createWebHashHistory(),
 	routes,
 });
-router.beforeEach((to) => {
+router.beforeEach(async (to, from) => {
 	const globalStore = useGlobalStore()
-	let { isSettingsOpen } = storeToRefs(globalStore)
-	if( to.fullPath.includes('/settings')){
-		globalStore.isSettingsOpen = true
-	} else {
-		globalStore.isSettingsOpen = false
+	if (
+		// make sure the user is authenticated
+		!globalStore.isAuth &&
+		// ❗️ Avoid an infinite redirect
+		to.name !== 'auth' &&
+		to.name !== 'registration'
+	) {
+		// redirect the user to the login page
+		return {
+			name: 'auth'
+		}
 	}
 })
 

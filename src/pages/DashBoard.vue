@@ -36,7 +36,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="flex-1 space-y-4 p-2 pt-6 md:p-8">
+    <div class="flex-1 space-y-4 p-2 pt-2">
 		<div class="flex justify-between space-y-3 flex-col md:flex-row md:items-center md:space-y-2">
 			<h2 class="text-3xl font-bold tracking-tight">
 				Статистика
@@ -71,7 +71,7 @@ onMounted(() => {
 				</TabsTrigger>
 			</TabsList>
 			<TabsContent value="overview" class="space-y-4">
-				<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+				<div class="grid gap-4 lg:grid-cols-2">
 					<Card>
 						<CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
 							<CardTitle class="text-sm font-medium">
@@ -114,19 +114,8 @@ onMounted(() => {
 					</Card>
 				</div>
 				<div class="grid gap-4 grid-cols-4 md:grid-cols-2 lg:grid-cols-7">
-					<Card class="col-span-4">
+					<Card class="col-span-7">
 						<Overview />
-					</Card>
-					<Card class="col-span-4 md:col-span-3">
-						<CardHeader>
-							<CardTitle>Последние продажи</CardTitle>
-							<CardDescription>
-								Было выполнено 256 услуг за этот месяц.
-							</CardDescription>
-						</CardHeader>
-						<CardContent>
-							<RecentSales />
-						</CardContent>
 					</Card>
 				</div>
 			</TabsContent>
