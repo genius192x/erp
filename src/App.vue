@@ -48,28 +48,6 @@ import {
 	SidebarTrigger,
 } from '@/components/ui/sidebar'
 
-
-
-import readXlsxFile from 'read-excel-file'
-onMounted(() => {
-	const input = document.getElementById('input')
-	if (input) {
-		input.addEventListener('change', () => {
-
-		})
-	}
-
-})
-function showFile() {
-	console.log('change');
-
-	readXlsxFile(input.files[0]).then((rows) => {
-		// `rows` is an array of rows
-		console.log(rows);
-		// each row being an array of cells.
-	})
-}
-
 import {
 	AudioWaveform,
 	BadgeCheck,
@@ -97,7 +75,7 @@ import {
 import { ref, onBeforeMount, computed, onMounted } from 'vue'
 
 import { useUserStore } from '@/store/UserStore.js'
-import {useGlobalStore} from '@/store/GlobalStore.js'
+import { useGlobalStore } from '@/store/GlobalStore.js'
 
 const userStore = useUserStore()
 const globalStore = useGlobalStore()
@@ -199,6 +177,25 @@ function setActiveTeam(team: typeof data.teams[number]) {
 </script>
 
 <template>
+	<div v-if="globalStore.isGlobalLoading" class="bg-white fixed top-0 left-0 w-[100dvw] h-[100dvh] z-50">
+
+		<svg class="w-[200px] h-[200px] fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" rsion="1.1" id="L9"
+			xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+			viewBox="0 0 100 100" enable-background="new 0 0 0 0" xml:space="preserve">
+			<rect x="35" y="40" width="4" height="10" fill="green">
+				<animateTransform attributeType="xml" attributeName="transform" type="translate" values="0 0; 0 10; 0 0"
+					begin="0" dur="0.8s" repeatCount="indefinite" />
+			</rect>
+			<rect x="45" y="40" width="4" height="10" fill="green">
+				<animateTransform attributeType="xml" attributeName="transform" type="translate" values="0 0; 0 10; 0 0"
+					begin="0.2s" dur="0.8s" repeatCount="indefinite" />
+			</rect>
+			<rect x="55" y="40" width="4" height="10" fill="green">
+				<animateTransform attributeType="xml" attributeName="transform" type="translate" values="0 0; 0 10; 0 0"
+					begin="0.4s" dur="0.8s" repeatCount="indefinite" />
+			</rect>
+		</svg>
+	</div>
 	<div v-if="!globalStore.isAuth" class="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
 		<div class="flex items-center justify-center py-12">
 			<div class="mx-auto grid w-[350px] gap-6">
@@ -408,7 +405,6 @@ function setActiveTeam(team: typeof data.teams[number]) {
 				</div>
 			</header>
 			<div class="flex flex-1 flex-col gap-4 p-2 pt-0">
-				<input type="file" id="input" @change="showFile" />
 				<router-view></router-view>
 			</div>
 		</SidebarInset>

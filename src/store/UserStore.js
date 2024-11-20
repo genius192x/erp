@@ -13,11 +13,11 @@ import {
 import {
 	toast
 } from 'vue-sonner'
-import { useGlobalStore } from './GlobalStore';
+import { useGlobalStore } from '@/store/GlobalStore';
 
 export const useUserStore = defineStore('UserStore', () => {
 	const userData = ref({
-		name: 'text',
+		name: '',
 		email: '',
 	})
 
@@ -29,20 +29,25 @@ export const useUserStore = defineStore('UserStore', () => {
 
 
 	async function getAccount() {
-		await account.get()
-			.then(function (response) {
-				userData.value = response
-				useGlobalStore().isAuth = true
-				console.log(userData.value.name);
+		setTimeout(async () => {
+			console.log(useGlobalStore.isGlobalLoading);
 
-			})
-			.finally(function () {
-				router.push('/')
-			})
-			.catch(function (error) {
-				console.log(error)
-				router.push('/auth')
-			})
+			await account.get()
+				.then(function (response) {
+					userData.value = response
+					useGlobalStore().isAuth = true
+					console.log(userData.value.name);
+
+				})
+				.finally(function () {
+					router.push('/')
+					hideLoader()
+				})
+				.catch(function (error) {
+					console.log(error)
+					router.push('/auth')
+				})
+		}, 1000)
 	}
 
 
@@ -62,6 +67,7 @@ export const useUserStore = defineStore('UserStore', () => {
 				getAccount()
 				useGlobalStore().isAuth = true
 				router.push('/')
+				hideLoader()
 			})
 			.catch(function (error) {
 				console.log(error)
@@ -79,7 +85,11 @@ export const useUserStore = defineStore('UserStore', () => {
 				console.log(error)
 			})
 	};
-
+	function hideLoader() {
+		setTimeout(() => {
+			useGlobalStore().isGlobalLoading = false
+		}, 300);
+	}
 	return {
 		createAccount,
 		authAccount,

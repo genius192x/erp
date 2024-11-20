@@ -9,7 +9,6 @@ import SettingDisplay from "@/pages/settings/SettingDisplay.vue"
 import SettingNotifications from "@/pages/settings/SettingNotifications.vue"
 import Authorization from '@/pages/Authorization.vue'
 import Registration from '@/pages/Registration.vue'
-import path from 'path'
 
 const routes = [
 	{
@@ -62,6 +61,7 @@ router.beforeEach(async (to, from) => {
 		return {
 			name: 'auth'
 		}
+	} else {
 	}
 })
 
