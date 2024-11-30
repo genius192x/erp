@@ -8,6 +8,8 @@ import { h } from 'vue'
 // import QuestionMarkCircledIcon from '~icons/radix-icons/question-mark-circled'
 // import StopwatchIcon from '~icons/radix-icons/stopwatch'
 
+
+
 export const labels = [
 	{
 		value: 'bug',
@@ -23,35 +25,58 @@ export const labels = [
 	},
 ]
 
-export const statuses = [
+export const months = [
 	{
-		value: 'backlog',
-		label: 'Backlog',
-		// icon: h(QuestionMarkCircledIcon),
+		value: 'Январь',
+		label: 'Январь'
 	},
 	{
-		value: 'todo',
-		label: 'Todo',
-		// icon: h(CircleIcon),
+		value: 'Февраль',
+		label: 'Февраль'
 	},
 	{
-		value: 'in progress',
-		label: 'In Progress',
-		// icon: h(StopwatchIcon),
+		value: 'Март',
+		label: 'Март'
 	},
 	{
-		value: 'done',
-		label: 'Done',
-		// icon: h(CheckCircledIcon),
+		value: 'Апрель',
+		label: 'Апрель'
 	},
 	{
-		value: 'canceled',
-		label: 'Canceled',
-		// icon: h(CrossCircledIcon),
+		value: 'Май',
+		label: 'Май'
+	},
+	{
+		value: 'Июнь',
+		label: 'Июнь'
+	},
+	{
+		value: 'Июль',
+		label: 'Июль'
+	},
+	{
+		value: 'Август',
+		label: 'Август'
+	},
+	{
+		value: 'Сентябрь',
+		label: 'Сентябрь'
+	},
+	{
+		value: 'Октябрь',
+		label: 'Октябрь'
+	},
+	{
+		value: 'Ноябрь',
+		label: 'Ноябрь'
+	},
+	{
+		value: 'Декабрь',
+		label: 'Май'
 	},
 ]
 
-export const priorities = [
+export const types = [
 	{
 		label: 'Low',
 		value: 'low',

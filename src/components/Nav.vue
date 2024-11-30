@@ -11,14 +11,14 @@ import {
 export interface LinkProp {
 	title: string
 	link?: string
-    label?: string
-    icon: string
-    variant: 'default' | 'ghost'
+		label?: string
+		icon: string
+		variant: 'default' | 'ghost'
 }
 
 interface NavProps {
-    isCollapsed: boolean
-    links: LinkProp[]
+	isCollapsed: boolean
+	links: LinkProp[]
 }
 
 defineProps<NavProps>()

@@ -1,10 +1,10 @@
-<script setup>
-import { VisDonut, VisSingleContainer } from '@unovis/vue';
-import { Donut } from '@unovis/ts';
-import { computed, ref } from 'vue';
-import { useMounted } from '@vueuse/core';
+<script setup lang="ts">
 import { ChartSingleTooltip, defaultColors } from '@/components/ui/chart';
 import { cn } from '@/lib/utils';
+import { Donut } from '@unovis/ts';
+import { VisDonut, VisSingleContainer } from '@unovis/vue';
+import { useMounted } from '@vueuse/core';
+import { computed, ref } from 'vue';
 
 const props = defineProps({
     data: { type: Array, required: true },

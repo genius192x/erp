@@ -22,60 +22,55 @@ export const columns: ColumnDef<Task>[] = [
 		enableHiding: false,
 	},
 	{
-		accessorKey: 'id',
-		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Task' }),
-		cell: ({ row }) => h('div', { class: 'w-20' }, row.getValue('id')),
+		accessorKey: 'name',
+		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Название' }),
+
+		cell: ({ row }) => {
+			const label = labels.find(label => label.value === row.original.label)
+
+			return h('div', { class: 'flex space-x-2 min-w-20 items-start' }, [
+				label ? h(Badge, { variant: 'outline' }, () => label.label) : null,
+				h('p', { class: 'line-clamp-1  font-medium' }, row.getValue('name')),
+			])
+		},
+	},
+	{
+		accessorKey: 'summ',
+		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Значение' }),
+		cell: ({ row }) => h('div', { class: `w-20 ${+row.getValue('summ') >= 0 ? 'text-green-600' : 'text-red-600' } text-sm` }, (row.getValue('summ') + ' ₽')),
 		enableSorting: false,
 		enableHiding: false,
 	},
 	{
-		accessorKey: 'title',
-		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Title' }),
+		accessorKey: 'month',
+		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Месяц' }),
 
 		cell: ({ row }) => {
-		const label = labels.find(label => label.value === row.original.label)
+		const date = row.getValue('month')
 
-		return h('div', { class: 'flex space-x-2 min-w-20 items-start' }, [
-			label ? h(Badge, { variant: 'outline' }, () => label.label) : null,
-			h('p', { class: 'line-clamp-1  font-medium' }, row.getValue('title')),
-		])
-		},
-	},
-	{
-		accessorKey: 'status',
-		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Status' }),
 
-		cell: ({ row }) => {
-		const status = statuses.find(
-			status => status.value === row.getValue('status'),
-		)
-
-		if (!status)
+		if (!date)
 			return null
 
 		return h('div', { class: 'flex w-[100px] items-center' }, [
-			status.icon && h(status.icon, { class: 'mr-2 h-4 w-4 text-muted-foreground' }),
-			h('span', status.label),
+			h('span', date),
 		])
 		},
 		filterFn: (row, id, value) => {
-		return value.includes(row.getValue(id))
+			return value.includes(row.getValue(id))
 		},
 	},
 	{
-		accessorKey: 'priority',
-		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Priority' }),
+		accessorKey: 'type',
+		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Тип' }),
 		cell: ({ row }) => {
-		const priority = priorities.find(
-			priority => priority.value === row.getValue('priority'),
-		)
+		const type = row.getValue('type') || 'Не указано'
 
-		if (!priority)
+		if (!type)
 			return null
 
 		return h('div', { class: 'flex items-center' }, [
-			priority.icon && h(priority.icon, { class: 'mr-2 h-4 w-4 text-muted-foreground' }),
-			h('span', {}, priority.label),
+			h('span', {}, type),
 		])
 		},
 		filterFn: (row, id, value) => {

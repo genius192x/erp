@@ -1,29 +1,21 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button'
 import { ReloadIcon } from '@radix-icons/vue'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import {
 	Form,
 	FormControl,
 	FormField,
 	FormItem,
-	FormMessage,
 	FormLabel,
 } from '@/components/ui/form'
-import { Label } from '@/components/ui/label'
 import { toTypedSchema } from '@vee-validate/zod';
 import { z } from 'zod';
 import {useUserStore} from '@/store/UserStore';
 import { useGlobalStore } from '@/store/GlobalStore';
-import router from '@/router';
-
-import {
-	toast
-} from 'vue-sonner'
 
 const userStore = useUserStore()
-const globalStore = useGlobalStore()
 
 
 const accountFormSchema = toTypedSchema(z.object({
@@ -79,9 +71,9 @@ function onSubmit(data) {
 						</FormItem>
 					</FormField>
 				</div>
-				<Button class="w-full" type="submit">
-					<!-- <ReloadIcon class="w-4 h-4 mr-2 animate-spin" v-if="userStore.isLoaded" /> -->
-					Войти
+				<Button class="w-full" type="submit" :disabled="userStore.isLoading">
+					<ReloadIcon class="w-4 h-4 mr-2 animate-spin" v-if="userStore.isLoading" />
+					{{ userStore.isLoading ? 'Авторизация' : 'Войти' }}
 				</Button>
 				<div class="mt-4 text-center text-sm">
 					Еще нет аккаунта?

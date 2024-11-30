@@ -29,7 +29,7 @@ defineProps({
           </span>
           <span>{{ item.name }}</span>
         </div>
-        <span class="font-semibold ml-4">{{ item.value }}</span>
+        <span class="font-semibold ml-4">{{ Intl.NumberFormat('ru-RU').format(item.value) }}</span>
       </div>
     </CardContent>
   </Card>

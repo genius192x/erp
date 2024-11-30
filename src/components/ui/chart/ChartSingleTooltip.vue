@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { VisTooltip } from '@unovis/vue';
 import { omit } from '@unovis/ts';
 import { createApp } from 'vue';
@@ -8,7 +8,7 @@ const props = defineProps({
     selector: { type: String, required: true },
     index: { type: String, required: true },
     items: { type: Array, required: false },
-    // valueFormatter: { type: Function, required: false, default: (tick: number) => `${tick}` },
+    valueFormatter: { type: Function, required: false, default: (tick: number) => `${tick}` },
     customTooltip: { type: null, required: false }
   }
 );

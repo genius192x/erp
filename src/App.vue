@@ -47,8 +47,10 @@ import {
 	SidebarRail,
 	SidebarTrigger,
 } from '@/components/ui/sidebar'
-
+import { Toaster, toast } from 'vue-sonner'
 import {
+	Banknote,
+	Home,
 	AudioWaveform,
 	BadgeCheck,
 	Bell,
@@ -76,7 +78,9 @@ import { ref, onBeforeMount, computed, onMounted } from 'vue'
 
 import { useUserStore } from '@/store/UserStore.js'
 import { useGlobalStore } from '@/store/GlobalStore.js'
+import { useTableStore } from '@/store/TableStore'
 
+const tableStore = useTableStore()
 const userStore = useUserStore()
 const globalStore = useGlobalStore()
 
@@ -160,9 +164,10 @@ const data = {
 	],
 	projects: [
 		{
-			name: 'Продажи & Маркетинг',
-			url: '#',
-			icon: PieChart,
+			name: 'Операции',
+			url: '/tasks',
+			disabled: tableStore.hasDocument,
+			icon: Banknote,
 		},
 	],
 }
@@ -255,6 +260,18 @@ function setActiveTeam(team: typeof data.teams[number]) {
 			</SidebarHeader>
 			<SidebarContent>
 				<SidebarGroup>
+					<SidebarMenu>
+						<SidebarMenuItem>
+							<SidebarMenuButton :tooltip="'Главная'" as-child>
+								<router-link to="/">
+									<component :is="Home" />
+									<span>Главная</span>
+								</router-link>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+					</SidebarMenu>
+				</SidebarGroup>
+				<SidebarGroup>
 					<SidebarGroupLabel>Платформа</SidebarGroupLabel>
 					<SidebarMenu>
 						<Collapsible v-for="item in data.navMain" :key="item.title" as-child :default-open="item.isActive"
@@ -287,11 +304,11 @@ function setActiveTeam(team: typeof data.teams[number]) {
 					<SidebarGroupLabel>Проекты</SidebarGroupLabel>
 					<SidebarMenu>
 						<SidebarMenuItem v-for="item in data.projects" :key="item.name">
-							<SidebarMenuButton as-child>
-								<a :href="item.url">
-									<component :is="item.icon" />
-									<span>{{ item.name }}</span>
-								</a>
+							<SidebarMenuButton as-child >
+								<router-link to="/tasks" :disabled="!item.disabled">
+										<component :is="item.icon" />
+										<span>{{ item.name }}</span>
+								</router-link>
 							</SidebarMenuButton>
 							<DropdownMenu>
 								<DropdownMenuTrigger as-child>
@@ -404,9 +421,10 @@ function setActiveTeam(team: typeof data.teams[number]) {
 					<Separator orientation="vertical" class="mr-2 h-4" />
 				</div>
 			</header>
-			<div class="flex flex-1 flex-col gap-4 p-2 pt-0">
+			<div class="flex flex-1 flex-col gap-4 p-2 pt-0 w-full">
 				<router-view></router-view>
 			</div>
 		</SidebarInset>
 	</SidebarProvider>
+	<Toaster richColors />
 </template>

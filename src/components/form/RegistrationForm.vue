@@ -77,9 +77,9 @@ function onSubmit(data) {
 						</FormItem>
 						<FormMessage />
 					</FormField>
-					<Button class="w-full" type="submit" :disabled="userStore.isLoaded">
-						<ReloadIcon class="w-4 h-4 mr-2 animate-spin" v-if="userStore.isLoaded" />
-						{{ userStore.isLoaded ? 'Создаем аккаунт' : 'Создать аккаунт' }}
+					<Button class="w-full" type="submit" :disabled="userStore.isLoading">
+						<ReloadIcon class="w-4 h-4 mr-2 animate-spin" v-if="userStore.isLoading" />
+						{{ userStore.isLoading ? 'Создаем аккаунт' : 'Создать аккаунт' }}
 					</Button>
 				</div>
 				<div class="mt-4 text-center text-sm">
