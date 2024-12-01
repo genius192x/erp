@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import Overview from '@/components/Overview.vue'
-import DateRangePicker from '@/components/DateRangePicker.vue'
-import RecentSales from '@/components/RecentSales.vue'
 import {computed, onMounted, ref} from "vue"
-import { Toaster } from '@/components/ui/sonner'
-import { toast } from 'vue-sonner'
 
-
+import CardLineChart from '@/components/cards/CardLineChart.vue'
 import UploadForm from '@/components/form/UploadForm.vue'
 import { Button } from '@/components/ui/button'
 import {
@@ -23,6 +19,7 @@ import {
     TabsTrigger,
 } from '@/components/ui/tabs'
 import LineChart from '@/components/LineChart.vue'
+import DifferentLine from '@/components/DifferentLine.vue'
 import Donut from '@/components/Donut.vue'
 import {useTableStore} from '@/store/TableStore.js'
 
@@ -37,7 +34,7 @@ const summIncomes = computed(() => {
 	})
 	console.log(typeof(result.value));
 
-	return Intl.NumberFormat('ru-RU').format(Math.round(result.value))
+	return Intl.NumberFormat('ru-RU').format(result.value)
 })
 
 const summExpenses = computed(() => {
@@ -49,18 +46,18 @@ const summExpenses = computed(() => {
 	})
 	console.log(typeof(result.value));
 
-	return Intl.NumberFormat('ru-RU').format(Math.round(result.value))
+	return Intl.NumberFormat('ru-RU').format(result.value)
 })
 
 
 </script>
 
 <template>
-	<div v-if="!tableStore.hasDocument" class="flex flex-col flex-1 space-y-4 p-2 pt-2 items-center justify-center">
+	<div v-if="!tableStore.hasDocument" class="flex flex-col flex-1 space-y-4 pt-2 items-center justify-center">
 		<h1 class="text-3xl text-center">Кажется у вас еще нет загруженных листов</h1>
 		<UploadForm/>
 	</div>
-	<div v-else class="flex-1 space-y-4 p-2 pt-2">
+	<div v-else class="flex-1 space-y-4 pt-2">
 		<div class="flex justify-between space-y-3 flex-col md:flex-row md:items-center md:space-y-2">
 			<h2 class="text-3xl font-bold tracking-tight">
 				Статистика
@@ -79,7 +76,7 @@ const summExpenses = computed(() => {
 				<Toaster />
 			</div> -->
 		</div>
-		<Tabs default-value="overview" class="space-y-1 md:space-y-4 overflow-hidden">
+		<Tabs default-value="overview" class="space-y-1 md:space-y-4">
 			<TabsList class="overflow-auto">
 				<TabsTrigger value="overview">
 					Общее
@@ -97,47 +94,34 @@ const summExpenses = computed(() => {
 			<TabsContent value="overview" class="space-y-4">
 
 				<h1 v-if="tableStore.stats.length">{{ tableStore.stats[0][2] }}</h1>
-				<div class="grid gap-4 lg:grid-cols-2" v-if="tableStore.stats">
-					<Card>
-						<CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
-							<CardTitle class="text-sm font-medium">
-								Общие доходы
-							</CardTitle>
-							<!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-								stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="h-4 w-4 text-muted-foreground">
-								<path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-							</svg> -->
-						</CardHeader>
-						<CardContent>
-							<div class="text-2xl font-bold">
-								<span class="anim-num">{{  summIncomes }}</span> ₽
-							</div>
-							<!--<p class="text-xs text-green-600 font-medium">
-								+20.1% относительно прошлого месяца
-							</p>-->
-							<LineChart :colors="['green']" :showTooltip="false" :data="tableStore.stats"  :categorie="'totalIncomes'"/>
-						</CardContent>
-					</Card>
-					<Card>
-						<CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
-							<CardTitle class="text-sm font-medium">
-								Общие расходы
-							</CardTitle>
-							<!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-								stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="h-4 w-4 text-muted-foreground">
-								<path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-							</svg> -->
-						</CardHeader>
-						<CardContent>
-							<div class="text-2xl font-bold">
-								<span class="anim-num">{{ summExpenses }}</span> ₽
-							</div>
-							<!--<p class="text-xs text-red-600 font-medium">
-								-18.1% относительно прошлого месяца
-							</p>-->
-							<LineChart :colors="['red']" :showTooltip="false" :data="tableStore.stats" :categorie="'totalExpenses'" />
-						</CardContent>
-					</Card>
+				<div class="flex flex-col gap-4 lg:grid lg:grid-cols-3" v-if="tableStore.stats">
+          <CardLineChart
+            :data="tableStore.stats"
+            :title="'Общие доходы'"
+            :value="summIncomes"
+            :colors="['green']"
+            :index="'month'"
+            :class="'h-[100px] w-full mt-2'"
+            :categories="['totalIncomes']"
+          />
+          <CardLineChart
+            :data="tableStore.stats"
+            :title="'Общие расходы'"
+            :value="summExpenses"
+            :colors="['red']"
+            :index="'month'"
+            :class="'h-[100px] w-full mt-2'"
+            :categories="['totalExpenses']"
+          />
+          <CardLineChart
+            :data="tableStore.stats"
+            :title="'Разница'"
+            :value="summExpenses"
+            :colors="['red', 'green']"
+            :index="'month'"
+            :class="'h-[100px] w-full mt-2'"
+            :categories="['totalExpenses', 'totalIncomes']"
+          />
 				</div>
 				<div class="grid gap-4 grid-cols-4 md:grid-cols-2 lg:grid-cols-7" v-if="tableStore.stats">
 					<Card class="col-span-7">

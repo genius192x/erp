@@ -28,7 +28,6 @@ const summIncomes = computed(() => {
 
 
 		if (row.original.summ > 0 && row.original.summ !== null) {
-			console.log(row.original.summ);
 			result += row.original.summ
 		}
 	})
@@ -41,7 +40,6 @@ const summExpenses = computed(() => {
 
 
 		if (row.original.summ < 0 && row.original.summ !== null) {
-			console.log(row.original.summ);
 			result += row.original.summ
 		}
 	})

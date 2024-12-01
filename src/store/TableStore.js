@@ -17,6 +17,8 @@ export const useTableStore = defineStore('tableStore', () => {
 		.setProject('67346ca300224abdf68b');
 
 	const databases = new Databases(client);
+
+
 	const createDocument = async function (data) {
 		await databases.createDocument(
 			'673f8cd6003af5ea79f0', // databaseId
@@ -24,7 +26,6 @@ export const useTableStore = defineStore('tableStore', () => {
 			useUserStore().userData.$id, // documentId
 			{"data" : JSON.stringify(data)}
     ).then(function (response) {
-      console.log('response',response);
 
 			getDocument()
 		}).catch(function (error) {
@@ -32,13 +33,20 @@ export const useTableStore = defineStore('tableStore', () => {
 
 		})
 	}
-	async function getDocument(){
+  async function getDocument() {
+
+    /*
+    локальный вариант хранения
+    */
+    // table.value = normolizeData(JSON.parse(localStorage.getItem('data')))
+    // stats.value = processTable(JSON.parse(localStorage.getItem('data')))
+		// hasDocument.value = true
+
 		await databases.getDocument(
 				'673f8cd6003af5ea79f0', // databaseId
 				'6745eb78000421112d12', // collectionId
 				useUserStore().userData.$id // documentId
     ).then(function (response) {
-      console.log('response', response);
 
 			table.value = normolizeData(JSON.parse(response.data))
 			stats.value = processTable(JSON.parse(response.data))
@@ -55,14 +63,18 @@ export const useTableStore = defineStore('tableStore', () => {
 
 			const [
 				month, // Месяц (название)
-				year, // Год
-				monthCount, // Число месяца
-				date, // Дата
-				summ, // Назначение платежа
-				name, // Название
+        year, // Год
+        monthCount,// Число месяца
+				date, // Число
+				summ, // Сумма
+				name, // Назначение платежа
 				type, // Статья
-				wallet, // Кошелек
-				contr, //  Контрагент
+        wallet, // Кошелёк
+        contr, // Контрагент
+        paymentCategory, // Тип статьи
+        categoryType, // Тип статьи
+				paymentType, // Платёж/поступление
+				direction // Направление
 			] = row;
 			if (index !== 0) {
 				result.push({
@@ -70,9 +82,12 @@ export const useTableStore = defineStore('tableStore', () => {
 					year,
 					monthCount,
 					date,
-					summ,
+          summ,
+          categoryType,
 					name,
-					type,
+          type,
+          paymentType,
+          paymentCategory,
 					wallet,
 					contr,
 				});
@@ -91,12 +106,16 @@ export const useTableStore = defineStore('tableStore', () => {
 
 			const [
 				month, // Месяц (название)
-				year, // Год
+        year, // Год
+        monthCount,// Число месяца
 				day, // Число
 				amount, // Сумма
 				purpose, // Назначение платежа
 				category, // Статья
-				wallet, // Кошелёк
+        wallet, // Кошелёк
+        contrAgent, // Контрагент
+        paymentCategory, // Тип статьи
+        categoryType, // Тип статьи
 				paymentType, // Платёж/поступление
 				direction // Направление
 			] = row;
@@ -137,10 +156,10 @@ export const useTableStore = defineStore('tableStore', () => {
 			});
 
 			// Считаем сумму доходов и расходов
-			if (purpose && purpose < 0) {
-					result[key].totalExpenses +=Math.abs(purpose);
-			} else if(purpose > 0) {
-				result[key].totalIncomes += purpose;
+			if (amount && amount < 0) {
+					result[key].totalExpenses +=Math.abs(amount);
+			} else if(amount > 0) {
+				result[key].totalIncomes += amount;
 			};
 
 		});

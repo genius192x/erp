@@ -37,8 +37,11 @@ export const columns: ColumnDef<Task>[] = [
 	{
 		accessorKey: 'summ',
 		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Значение' }),
-		cell: ({ row }) => h('div', { class: `w-20 ${+row.getValue('summ') >= 0 ? 'text-green-600' : 'text-red-600' } text-sm` }, (row.getValue('summ') + ' ₽')),
-		enableSorting: false,
+    cell: ({ row }) => {
+			let color = '';
+      return h('div', { class: `w-auto text-sm`, style:`${+row.getValue('summ') >= 0 ? 'color:green;' : 'color:red;'}}` }, (row.getValue('summ') + ' ₽'))
+    },
+		enableSorting: true,
 		enableHiding: false,
 	},
 	{
@@ -52,29 +55,48 @@ export const columns: ColumnDef<Task>[] = [
 		if (!date)
 			return null
 
-		return h('div', { class: 'flex w-[100px] items-center' }, [
+		return h('div', { class: 'flex w-[60px] items-center' }, [
 			h('span', date),
 		])
 		},
 		filterFn: (row, id, value) => {
 			return value.includes(row.getValue(id))
 		},
-	},
+  },
 	{
-		accessorKey: 'type',
-		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Тип' }),
+		accessorKey: 'categoryType',
+		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Статья' }),
 		cell: ({ row }) => {
-		const type = row.getValue('type') || 'Не указано'
+		const categoryType = row.getValue('categoryType') || 'Не указано'
 
-		if (!type)
+		if (!categoryType)
 			return null
 
 		return h('div', { class: 'flex items-center' }, [
-			h('span', {}, type),
+			h('span', {}, categoryType),
 		])
 		},
 		filterFn: (row, id, value) => {
 		return value.includes(row.getValue(id))
+		},
+  },
+  {
+		accessorKey: 'paymentType',
+		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Тип' }),
+
+		cell: ({ row }) => {
+		const paymentType = row.getValue('paymentType')
+
+
+		if (!paymentType)
+			return null
+
+		return h('div', { class: 'flex w-[100px] items-center' }, [
+			h('span', paymentType),
+		])
+		},
+		filterFn: (row, id, value) => {
+			return value.includes(row.getValue(id))
 		},
 	},
 	{

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Table } from '@tanstack/vue-table'
-import { computed } from 'vue'
+import { computed, reactive } from 'vue'
 import type { Task } from '@/lib/schema'
-
+import { Checkbox } from '@/components/ui/checkbox'
 import { types, months, getTypes } from '@/lib/data'
 import DataTableFacetedFilter from './DataTableFacetedFilter.vue'
 import DataTableViewOptions from './DataTableViewOptions.vue'
@@ -37,6 +37,41 @@ const props = defineProps<DataTableToolbarProps>()
 
 const isFiltered = computed(() => props.table.getState().columnFilters.length > 0)
 
+const typeFilter = reactive({
+	incomes: {
+		label: 'Поступление',
+		value: false
+	},
+	expanses: {
+		label: 'Выбытие',
+		value: false
+	},
+})
+
+function handleChange() {
+	let result = [];
+
+	for (var key in typeFilter) {
+		if (!typeFilter[key].value) {
+			continue
+		} else {
+			result.push(typeFilter[key].label)
+		}
+	}
+	if (result.length) {
+		props.table.getColumn('paymentType')?.setFilterValue(result)
+	} else {
+		props.table.getColumn('paymentType')?.setFilterValue(undefined)
+	}
+}
+
+function reset() {
+	for (var key in typeFilter) {
+		typeFilter[key].value = false
+	}
+	props.table.resetColumnFilters()
+}
+
 getTypes()
 </script>
 
@@ -56,17 +91,47 @@ getTypes()
 				:options="months"
 			/>
 			<DataTableFacetedFilter
-				v-if="table.getColumn('type')"
-				:column="table.getColumn('type')"
+				v-if="table.getColumn('categoryType')"
+				:column="table.getColumn('categoryType')"
 				title="Тип"
 				:options="getTypes()"
 			/>
+			<div class="flex items-center space-x-2">
+				<Checkbox id="incomes"
+					:checked="typeFilter.incomes.value"
+					@update:checked="(value) => {
+						typeFilter.incomes.value = value
+						handleChange()
+					}"
+				/>
+				<label
+					for="incomes"
+					class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+				>
+					Доходы
+				</label>
+			</div>
+			<div class="flex items-center space-x-2">
+				<Checkbox id="expanses"
+					:checked="typeFilter.expanses.value"
+					@update:checked="(value) => {
+						typeFilter.expanses.value = value
+						handleChange()
+					}"
+				/>
+				<label
+					for="expanses"
+					class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+				>
+					Расходы
+				</label>
+			</div>
 
 			<Button
 				v-if="isFiltered"
 				variant="ghost"
 				class="h-8 px-2 lg:px-3"
-				@click="table.resetColumnFilters()"
+				@click="reset()"
 			>
 				Сбросить
 				<Cross2Icon class="ml-2 h-4 w-4" />

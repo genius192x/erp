@@ -2,12 +2,9 @@
 import { LineChart } from '@/components/ui/chart-line'
 
 interface Data{
-	data: [],
-	colors: [string],
-	categories: [string],
-  showTooltip: boolean,
-  index: string,
-  class: string,
+  data: [],
+  colors: []
+  categories: []
 }
 
 const props = defineProps<Data>()
@@ -19,17 +16,17 @@ console.log(props.data);
 
 <template>
   <LineChart
-    :index="props.index"
-    :class="props.class"
     :data="props.data"
-    :categories="[categories]"
+    index="month"
+    :colors="props.colors"
+    class="h-[100px] w-full mt-2"
+    :categories="props.categories"
     :y-formatter="(tick, i) => {
       return typeof tick === 'number'
         ? `$ ${new Intl.NumberFormat('us').format(tick).toString()}`
         : ''
     }"
-		:colors="props.colors"
-    :show-tooltip="props.showTooltip"
+    :show-tooltip="false"
     :show-grid-line="false"
     :show-legend="false"
     :show-x-axis="false"

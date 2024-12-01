@@ -421,7 +421,7 @@ function setActiveTeam(team: typeof data.teams[number]) {
 					<Separator orientation="vertical" class="mr-2 h-4" />
 				</div>
 			</header>
-			<div class="flex flex-1 flex-col gap-4 p-2 pt-0 w-full">
+			<div class="flex flex-1 flex-col gap-4 p-2 pt-0 w-full overflow-hidden">
 				<router-view></router-view>
 			</div>
 		</SidebarInset>

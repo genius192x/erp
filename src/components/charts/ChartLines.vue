@@ -3,11 +3,11 @@ import { LineChart } from '@/components/ui/chart-line'
 
 interface Data{
 	data: [],
-	colors: [string],
-	categories: [string],
-  showTooltip: boolean,
+  colors: string[],
   index: string,
-  class: string,
+  class: String,
+	categories: string[],
+	showTooltip: boolean,
 }
 
 const props = defineProps<Data>()
@@ -22,7 +22,7 @@ console.log(props.data);
     :index="props.index"
     :class="props.class"
     :data="props.data"
-    :categories="[categories]"
+    :categories="props.categories"
     :y-formatter="(tick, i) => {
       return typeof tick === 'number'
         ? `$ ${new Intl.NumberFormat('us').format(tick).toString()}`

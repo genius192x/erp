@@ -48,17 +48,17 @@ export default {
 		<DropdownMenuContent align="start">
 			<DropdownMenuItem @click="column.toggleSorting(false)">
 			<ArrowUpIcon class="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-			Asc
+				Повышение
 			</DropdownMenuItem>
 			<DropdownMenuItem @click="column.toggleSorting(true)">
 			<ArrowDownIcon class="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-			Desc
+				Пониж
 			</DropdownMenuItem>
-			<DropdownMenuSeparator />
+			<!-- <DropdownMenuSeparator />
 			<DropdownMenuItem @click="column.toggleVisibility(false)">
 			<EyeNoneIcon class="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
 			Hide
-			</DropdownMenuItem>
+			</DropdownMenuItem> -->
 		</DropdownMenuContent>
 		</DropdownMenu>
 	</div>
