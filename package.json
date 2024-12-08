@@ -38,6 +38,7 @@
     "gsap": "^3.12.5",
     "iconify": "^1.4.0",
     "lucide-vue-next": "^0.390.0",
+    "openai": "^4.76.0",
     "pinia": "^2.1.7",
     "radix-vue": "^1.9.6",
     "read-excel-file": "^5.8.6",

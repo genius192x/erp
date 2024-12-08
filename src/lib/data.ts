@@ -72,7 +72,7 @@ export const months = [
 	},
 	{
 		value: 'Декабрь',
-		label: 'Май'
+		label: 'Декабрь'
 	},
 ]
 

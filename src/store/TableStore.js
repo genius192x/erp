@@ -6,10 +6,12 @@ import {
 } from "vue";
 import { useUserStore } from './UserStore';
 import { Client, Databases, ID } from "appwrite";
+import { rows } from '@unovis/ts/components/timeline/style';
 
 export const useTableStore = defineStore('tableStore', () => {
 	const table = ref()
 	const stats = ref()
+	const rowsItems = ref([])
 	const hasDocument = ref(false)
 
 	const client = new Client()
@@ -17,6 +19,44 @@ export const useTableStore = defineStore('tableStore', () => {
 		.setProject('67346ca300224abdf68b');
 
 	const databases = new Databases(client);
+
+	const updateDocument = async function (data) {
+
+		const monthMap = {
+				1:"Январь",  2:"Февраль",  3:"Март", 4:"Апрель",
+				5:"Май",  6:"Июнь",  7:"Июль", 8: "Август",
+				9:"Сентябрь",  10:"Октябрь", 11:"Ноябрь", 12: "Декабрь"
+			};
+		data.month = monthMap[data.monthCount]
+		if (data.paymentType === 'Выбытие') {
+			data.summ = -data.summ
+		}
+
+		let result = [
+			data.month,
+			data.year,
+			data.monthCount,
+			data.date,
+			data.summ,
+			data.name,
+			data.type,
+			'Банк',//TODO убери
+			null,
+			data.contragent,
+			data.type,
+			data.paymentType,
+		]
+		rowsItems.value.unshift(result)
+
+		await databases.updateDocument(
+			'673f8cd6003af5ea79f0', // databaseId
+			'6745eb78000421112d12', // collectionId
+			useUserStore().userData.$id, // documentId
+			{"data" : JSON.stringify(rowsItems.value)}, // data (optional)
+		).then(function (response) {
+			getDocument()
+		})
+	}
 
 
 	const createDocument = async function (data) {
@@ -47,7 +87,7 @@ export const useTableStore = defineStore('tableStore', () => {
 				'6745eb78000421112d12', // collectionId
 				useUserStore().userData.$id // documentId
     ).then(function (response) {
-
+			rowsItems.value = JSON.parse(response.data)
 			table.value = normolizeData(JSON.parse(response.data))
 			stats.value = processTable(JSON.parse(response.data))
 			normolizeData(JSON.parse(response.data))
@@ -75,22 +115,25 @@ export const useTableStore = defineStore('tableStore', () => {
         categoryType, // Тип статьи
 				paymentType, // Платёж/поступление
 				direction // Направление
-			] = row;
-			if (index !== 0) {
-				result.push({
-					month,
-					year,
-					monthCount,
-					date,
-          summ,
-          categoryType,
-					name,
-          type,
-          paymentType,
-          paymentCategory,
-					wallet,
-					contr,
-				});
+			] = row || '-';
+
+			if (month !== "Месяц") {
+				if (name && summ) {
+					result.push({
+						month,
+						year,
+						monthCount,
+						date,
+						summ,
+						categoryType,
+						name,
+						type,
+						paymentType,
+						paymentCategory,
+						wallet,
+						contr,
+					});
+				}
 			}
 		})
 		result.forEach((row) => {
@@ -177,10 +220,12 @@ export const useTableStore = defineStore('tableStore', () => {
 	return {
 		table,
 		stats,
+		rowsItems,
 		hasDocument,
     createDocument,
-    normolizeData,
+		normolizeData,
+		updateDocument,
 		processTable,
-		getDocument
+		getDocument,
 	}
 })

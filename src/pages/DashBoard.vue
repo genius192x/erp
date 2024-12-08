@@ -28,27 +28,24 @@ const tableStore = useTableStore()
 const summIncomes = computed(() => {
 	let result = ref(0)
 	tableStore.stats.forEach(month => {
-		console.log(month.totalIncomes);
 
 		result.value += +month.totalIncomes
 	})
 	console.log(typeof(result.value));
 
-	return Intl.NumberFormat('ru-RU').format(result.value)
+	return result.value
 })
 
 const summExpenses = computed(() => {
 	let result = ref(0)
 	tableStore.stats.forEach(month => {
-		console.log(month.totalExpenses);
 
 		result.value += +month.totalExpenses
 	})
 	console.log(typeof(result.value));
 
-	return Intl.NumberFormat('ru-RU').format(result.value)
+	return result.value
 })
-
 
 </script>
 
@@ -84,43 +81,37 @@ const summExpenses = computed(() => {
 				<TabsTrigger value="analytics">
 					Финансы
 				</TabsTrigger>
-				<TabsTrigger value="reports">
-					Отчеты
-				</TabsTrigger>
-				<TabsTrigger value="notifications">
-					Уведомления
-				</TabsTrigger>
 			</TabsList>
 			<TabsContent value="overview" class="space-y-4">
 
 				<h1 v-if="tableStore.stats.length">{{ tableStore.stats[0][2] }}</h1>
 				<div class="flex flex-col gap-4 lg:grid lg:grid-cols-3" v-if="tableStore.stats">
+					<CardLineChart
+						:data="tableStore.stats"
+						:title="'Разница'"
+						:value="`${Intl.NumberFormat('ru-RU').format(summIncomes - summExpenses)}`"
+						:colors="['red', 'green']"
+						:index="'name'"
+						:class="'h-[100px] w-full mt-2'"
+						:categories="['totalExpenses', 'totalIncomes']"
+					/>
           <CardLineChart
             :data="tableStore.stats"
             :title="'Общие доходы'"
-            :value="summIncomes"
+            :value="Intl.NumberFormat('ru-RU').format(summIncomes)"
             :colors="['green']"
-            :index="'month'"
+            :index="'name'"
             :class="'h-[100px] w-full mt-2'"
             :categories="['totalIncomes']"
           />
           <CardLineChart
             :data="tableStore.stats"
             :title="'Общие расходы'"
-            :value="summExpenses"
+            :value="Intl.NumberFormat('ru-RU').format(summExpenses)"
             :colors="['red']"
-            :index="'month'"
+            :index="'name'"
             :class="'h-[100px] w-full mt-2'"
             :categories="['totalExpenses']"
-          />
-          <CardLineChart
-            :data="tableStore.stats"
-            :title="'Разница'"
-            :value="summExpenses"
-            :colors="['red', 'green']"
-            :index="'month'"
-            :class="'h-[100px] w-full mt-2'"
-            :categories="['totalExpenses', 'totalIncomes']"
           />
 				</div>
 				<div class="grid gap-4 grid-cols-4 md:grid-cols-2 lg:grid-cols-7" v-if="tableStore.stats">
@@ -132,16 +123,6 @@ const summExpenses = computed(() => {
 			<TabsContent value="analytics" class="space-y-4">
 				<Card class="col-span-4">
 					<Overview />
-				</Card>
-			</TabsContent>
-			<TabsContent value="reports" class="space-y-4">
-				<Card class="col-span-4 p-5">
-					<span class="">Тут будут отчеты</span>
-				</Card>
-			</TabsContent>
-			<TabsContent value="notifications" class="space-y-4">
-				<Card class="col-span-4 p-5">
-					<span class="">Тут будут уведомления</span>
 				</Card>
 			</TabsContent>
 		</Tabs>

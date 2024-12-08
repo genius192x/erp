@@ -12,11 +12,9 @@ function showFile(e) {
 	console.log(e.target);
   isLoading.value = true;
 	readXlsxFile(e.target.files[0], { sheet: 3 }).then((rows) => {
-		// `rows` is an array of rows
 		tableStore.stats = rows
-    console.log(rows);
-
-    tableStore.createDocument(rows)
+		tableStore.rowsItems = rows
+		tableStore.createDocument(tableStore.rowsItems)
     // let data = JSON.stringify(rows)
     // localStorage.setItem("data", data)
     // tableStore.table = tableStore.normolizeData(JSON.parse(data))

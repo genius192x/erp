@@ -39,7 +39,7 @@ export const columns: ColumnDef<Task>[] = [
 		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Значение' }),
     cell: ({ row }) => {
 			let color = '';
-      return h('div', { class: `w-auto text-sm`, style:`${+row.getValue('summ') >= 0 ? 'color:green;' : 'color:red;'}}` }, (row.getValue('summ') + ' ₽'))
+      return h('div', { class: `w-auto text-sm`, style:`${+row.getValue('summ') >= 0 ? 'color:green;' : 'color:red;'}}` }, (Intl.NumberFormat('ru-RU').format(row.getValue('summ'))  + ' ₽'))
     },
 		enableSorting: true,
 		enableHiding: false,

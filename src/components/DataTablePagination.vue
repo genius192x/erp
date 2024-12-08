@@ -51,11 +51,11 @@ const summExpenses = computed(() => {
 <template>
 			<div class="flex flex-col">
 				<div class="flex items-center text-sm md:px-2 mb-4 gap-4 flex-wrap">
-					<div class="text-muted-foreground">Поступление: <span class="text-black">{{ Intl.NumberFormat('ru-RU').format(summIncomes)  }}</span></div>
-          <Separator orientation="vertical" class="h-8"/>
-					<div class="text-muted-foreground">Списания: <span class="text-black">{{ Intl.NumberFormat('ru-RU').format(summExpenses) }}</span></div>
-          <Separator orientation="vertical" class="h-8"/>
-					<div class="text-muted-foreground">Сальдо: <span class="text-black">{{ parseFloat(+summIncomes + +summExpenses).toFixed(2) }}</span></div>
+					<div class="text-muted-foreground">Поступление: <span class="text-black">{{ Intl.NumberFormat('ru-RU').format(summIncomes) + ' ₽' }}</span></div>
+					<Separator orientation="vertical" class="h-8"/>
+					<div class="text-muted-foreground">Списания: <span class="text-black">{{ Intl.NumberFormat('ru-RU').format(summExpenses) + ' ₽'}}</span></div>
+					<Separator orientation="vertical" class="h-8"/>
+					<div class="text-muted-foreground">Сальдо: <span class="text-black">{{ Intl.NumberFormat('ru-RU').format(+summIncomes + +summExpenses) + ' ₽'}}</span></div>
 				</div>
 				<div class="flex flex-col gap-4 justify-between md:flex-row md:items-center md:px-2">
 					<div class="flex-1 text-sm text-muted-foreground">

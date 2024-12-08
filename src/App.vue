@@ -79,7 +79,6 @@ import { ref, onBeforeMount, computed, onMounted } from 'vue'
 import { useUserStore } from '@/store/UserStore.js'
 import { useGlobalStore } from '@/store/GlobalStore.js'
 import { useTableStore } from '@/store/TableStore'
-
 const tableStore = useTableStore()
 const userStore = useUserStore()
 const globalStore = useGlobalStore()
@@ -116,58 +115,19 @@ const data = {
 	],
 	navMain: [
 		{
-			title: 'Документация',
+			title: 'Операции',
 			url: '#',
-			icon: BookOpen,
-			items: [
-				{
-					title: 'Введение',
-					url: '#',
-				},
-				{
-					title: 'Начало работы',
-					url: '#',
-				},
-				{
-					title: 'Туториалы',
-					url: '#',
-				},
-				{
-					title: 'Последние изменения',
-					url: '#',
-				},
-			],
-		},
-		{
-			title: 'Настройки',
-			url: '#',
-			icon: Settings2,
-			items: [
-				{
-					title: 'Основные',
-					url: '#',
-				},
-				{
-					title: 'Команда',
-					url: '#',
-				},
-				{
-					title: 'Счета',
-					url: '#',
-				},
-				{
-					title: 'Компании',
-					url: '#',
-				},
-			],
-		},
-	],
-	projects: [
-		{
-			name: 'Операции',
-			url: '/tasks',
-			disabled: tableStore.hasDocument,
 			icon: Banknote,
+			items: [
+				{
+					title: 'Операции ДДС',
+					url: '/tasks',
+				},
+				{
+					title: 'Операции ПиУ',
+					url: '#',
+				},
+			],
 		},
 	],
 }
@@ -272,7 +232,7 @@ function setActiveTeam(team: typeof data.teams[number]) {
 					</SidebarMenu>
 				</SidebarGroup>
 				<SidebarGroup>
-					<SidebarGroupLabel>Платформа</SidebarGroupLabel>
+					<!-- <SidebarGroupLabel>Платформа</SidebarGroupLabel> -->
 					<SidebarMenu>
 						<Collapsible v-for="item in data.navMain" :key="item.title" as-child :default-open="item.isActive"
 							class="group/collapsible">
@@ -298,48 +258,6 @@ function setActiveTeam(team: typeof data.teams[number]) {
 								</CollapsibleContent>
 							</SidebarMenuItem>
 						</Collapsible>
-					</SidebarMenu>
-				</SidebarGroup>
-				<SidebarGroup class="group-data-[collapsible=icon]:hidden">
-					<SidebarGroupLabel>Проекты</SidebarGroupLabel>
-					<SidebarMenu>
-						<SidebarMenuItem v-for="item in data.projects" :key="item.name">
-							<SidebarMenuButton as-child >
-								<router-link to="/tasks" :disabled="!item.disabled">
-										<component :is="item.icon" />
-										<span>{{ item.name }}</span>
-								</router-link>
-							</SidebarMenuButton>
-							<DropdownMenu>
-								<DropdownMenuTrigger as-child>
-									<SidebarMenuAction show-on-hover>
-										<MoreHorizontal />
-										<span class="sr-only">More</span>
-									</SidebarMenuAction>
-								</DropdownMenuTrigger>
-								<DropdownMenuContent class="w-48 rounded-lg" side="bottom" align="end">
-									<DropdownMenuItem>
-										<Folder class="text-muted-foreground" />
-										<span>View Project</span>
-									</DropdownMenuItem>
-									<DropdownMenuItem>
-										<Forward class="text-muted-foreground" />
-										<span>Share Project</span>
-									</DropdownMenuItem>
-									<DropdownMenuSeparator />
-									<DropdownMenuItem>
-										<Trash2 class="text-muted-foreground" />
-										<span>Delete Project</span>
-									</DropdownMenuItem>
-								</DropdownMenuContent>
-							</DropdownMenu>
-						</SidebarMenuItem>
-						<!-- <SidebarMenuItem>
-							<SidebarMenuButton class="text-sidebar-foreground/70">
-								<MoreHorizontal class="text-sidebar-foreground/70" />
-								<span>More</span>
-							</SidebarMenuButton>
-						</SidebarMenuItem> -->
 					</SidebarMenu>
 				</SidebarGroup>
 			</SidebarContent>
