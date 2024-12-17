@@ -17,10 +17,10 @@ import {
 } from '@tanstack/vue-table'
 
 import { ref } from 'vue'
-import type { Task } from '@/lib/schema'
-import DataTablePagination from './DataTablePagination.vue'
-import DataTableToolbar from './DataTableToolbar.vue'
-import { valueUpdater } from '@/lib/utils'
+import type { Task } from './lib/schema'
+import DataTablePagination from '@/components/tables/operations/DataTablePagination.vue'
+import DataTableToolbar from '@/components/tables/operations/DataTableToolbar.vue'
+import { valueUpdater } from './lib/utils'
 import {
 	Table,
 	TableBody,
@@ -62,6 +62,8 @@ const table = useVueTable({
 	getFacetedRowModel: getFacetedRowModel(),
 	getFacetedUniqueValues: getFacetedUniqueValues(),
 })
+console.log(table.getAllColumns());
+
 </script>
 
 <template>

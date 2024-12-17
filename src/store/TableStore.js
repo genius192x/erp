@@ -13,6 +13,7 @@ export const useTableStore = defineStore('tableStore', () => {
 	const stats = ref()
 	const rowsItems = ref([])
 	const hasDocument = ref(false)
+	const loading = ref(false)
 
 	const client = new Client()
 		.setEndpoint('https://cloud.appwrite.io/v1')
@@ -42,8 +43,7 @@ export const useTableStore = defineStore('tableStore', () => {
 			data.type,
 			'Банк',//TODO убери
 			null,
-			data.contragent,
-			data.type,
+			data.mainType,
 			data.paymentType,
 		]
 		rowsItems.value.unshift(result)
@@ -58,35 +58,52 @@ export const useTableStore = defineStore('tableStore', () => {
 		})
 	}
 
+	const replaceDocument = async function (data) {
+		hasDocument.value = false
+		loading.value = true
 
+		table.value = []
+		stats.value = []
+		rowsItems.value = []
+		await databases.deleteDocument(
+			'673f8cd6003af5ea79f0', // databaseId
+			'6745eb78000421112d12', // collectionId
+			useUserStore().userData.$id // documentId
+		).then(function (response) {
+			console.log(data);
+
+			createDocument(data).finally(function () {
+				hasDocument.value = true
+				loading.value = false
+			})
+		})
+	}
 	const createDocument = async function (data) {
 		await databases.createDocument(
 			'673f8cd6003af5ea79f0', // databaseId
 			'6745eb78000421112d12', // collectionId
 			useUserStore().userData.$id, // documentId
 			{"data" : JSON.stringify(data)}
-    ).then(function (response) {
-
+		).then(function (response) {
 			getDocument()
 		}).catch(function (error) {
-      console.log(error);
-
+			console.log(error);
 		})
 	}
-  async function getDocument() {
 
-    /*
-    локальный вариант хранения
-    */
-    // table.value = normolizeData(JSON.parse(localStorage.getItem('data')))
-    // stats.value = processTable(JSON.parse(localStorage.getItem('data')))
+	async function getDocument() {
+		/*
+		локальный вариант хранения
+		*/
+		// table.value = normolizeData(JSON.parse(localStorage.getItem('data')))
+		// stats.value = processTable(JSON.parse(localStorage.getItem('data')))
 		// hasDocument.value = true
 
 		await databases.getDocument(
 				'673f8cd6003af5ea79f0', // databaseId
 				'6745eb78000421112d12', // collectionId
 				useUserStore().userData.$id // documentId
-    ).then(function (response) {
+		).then(function (response) {
 			rowsItems.value = JSON.parse(response.data)
 			table.value = normolizeData(JSON.parse(response.data))
 			stats.value = processTable(JSON.parse(response.data))
@@ -97,39 +114,37 @@ export const useTableStore = defineStore('tableStore', () => {
 
 		})
 	}
+
 	function normolizeData(data) {
 		let result = []
 		data.forEach((row, index) => {
 
-			const [
+			let [
 				month, // Месяц (название)
-        year, // Год
-        monthCount,// Число месяца
+				year, // Год
+				monthCount,// Число месяца
 				date, // Число
 				summ, // Сумма
 				name, // Назначение платежа
-				type, // Статья
-        wallet, // Кошелёк
-        contr, // Контрагент
-        paymentCategory, // Тип статьи
-        categoryType, // Тип статьи
+				subType, // Статья
+				wallet, // Кошелёк
+				contr, // Контрагент
+				mainType, // Тип статьи
 				paymentType, // Платёж/поступление
-				direction // Направление
-			] = row || '-';
-
+			] = row || 'не указано';
+			name = name ? name : 'не указано'
 			if (month !== "Месяц") {
-				if (name && summ) {
+				if (summ) {
 					result.push({
 						month,
 						year,
 						monthCount,
 						date,
 						summ,
-						categoryType,
 						name,
-						type,
+						subType,
+						mainType,
 						paymentType,
-						paymentCategory,
 						wallet,
 						contr,
 					});
@@ -142,6 +157,7 @@ export const useTableStore = defineStore('tableStore', () => {
 		return result
 
 	}
+
 	function processTable(rows) {
 		const result = {}; // Объект для хранения данных по месяцам
 
@@ -149,18 +165,16 @@ export const useTableStore = defineStore('tableStore', () => {
 
 			const [
 				month, // Месяц (название)
-        year, // Год
-        monthCount,// Число месяца
+				year, // Год
+				monthCount,// Число месяца
 				day, // Число
 				amount, // Сумма
 				purpose, // Назначение платежа
 				category, // Статья
-        wallet, // Кошелёк
-        contrAgent, // Контрагент
-        paymentCategory, // Тип статьи
-        categoryType, // Тип статьи
+				wallet, // Кошелёк
+				contrAgent, // Контрагент
+				mainCategory, // Тип статьи
 				paymentType, // Платёж/поступление
-				direction // Направление
 			] = row;
 
 			// Конвертация месяца в число
@@ -195,7 +209,6 @@ export const useTableStore = defineStore('tableStore', () => {
 				category,
 				wallet,
 				paymentType,
-				direction,
 			});
 
 			// Считаем сумму доходов и расходов
@@ -222,7 +235,9 @@ export const useTableStore = defineStore('tableStore', () => {
 		stats,
 		rowsItems,
 		hasDocument,
-    createDocument,
+		loading,
+		replaceDocument,
+		createDocument,
 		normolizeData,
 		updateDocument,
 		processTable,

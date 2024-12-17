@@ -1,14 +1,16 @@
 import type { ColumnDef } from '@tanstack/vue-table'
 import { h } from 'vue'
 
-import { labels, priorities, statuses } from '@/lib/data'
-import type { Task } from '@/lib/schema'
-import DataTableColumnHeader from './DataTableColumnHeader.vue'
-import DataTableRowActions from './DataTableRowActions.vue'
+import { labels, priorities, statuses } from './lib/data'
+import type { Task } from './lib/schema'
+import DropdownAction from '@/components/tables/transactions/DataTableDropDown.vue'
+import DataTableColumnHeader from '@/components/tables/operations/DataTableColumnHeader.vue'
+import DataTableRowActions from '@/components/tables/operations/DataTableRowActions.vue'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Badge } from '@/components/ui/badge'
 
 export const columns: ColumnDef<Task>[] = [
+
 	{
 		id: 'select',
 		header: ({ table }) => h(Checkbox, {
@@ -50,7 +52,6 @@ export const columns: ColumnDef<Task>[] = [
 
 		cell: ({ row }) => {
 		const date = row.getValue('month')
-
 
 		if (!date)
 			return null
@@ -100,7 +101,15 @@ export const columns: ColumnDef<Task>[] = [
 		},
 	},
 	{
-		id: 'actions',
-		cell: ({ row }) => h(DataTableRowActions, { row }),
-	},
+    id: 'actions',
+    enableHiding: false,
+    cell: ({ row }) => {
+      const payment = row.original
+
+      return h('div', { class: 'relative' }, h(DropdownAction, {
+        payment,
+        onExpand: row.toggleExpanded,
+      }))
+    },
+  },
 ]

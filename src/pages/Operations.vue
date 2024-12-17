@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import tasks from '@/lib/tasks.json'
-import DataTable from '@/components/DataTable.vue'
+import DataTable from '@/components/tables/operations/DataTable.vue'
 import UserNav from '@/components/UserNav.vue'
-import { columns } from '@/components/columns'
+import { columns } from '@/components/tables/operations/columns'
 
 import { useTableStore } from '@/store/TableStore'
 
 const tableStore = useTableStore()
 
-const myTasks = tasks
 </script>
 
 <template>

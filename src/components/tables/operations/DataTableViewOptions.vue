@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Table } from '@tanstack/vue-table'
 import { computed } from 'vue'
-import type { Task } from '@/lib/schema'
+import type { Task } from './lib/schema'
 import {MixerHorizontalIcon} from '@radix-icons/vue'
 
 import { Button } from '@/components/ui/button'

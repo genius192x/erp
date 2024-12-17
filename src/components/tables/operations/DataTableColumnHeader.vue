@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { Column } from '@tanstack/vue-table'
-import type { Task } from '@/lib/schema'
+import type { Task } from './lib/schema'
 import {ArrowDownIcon} from '@radix-icons/vue'
 import {ArrowUpIcon} from '@radix-icons/vue'
 import {CaretSortIcon} from '@radix-icons/vue'
 import {EyeNoneIcon} from '@radix-icons/vue'
 
-import { cn } from '@/lib/utils'
+import { cn } from './lib/utils'
 import { Button } from '@/components/ui/button'
 import {
 	DropdownMenu,

@@ -12,7 +12,7 @@ export const taskSchema = z.object({
 	month: z.string(),
 	name: z.string(),
 	summ: z.number(),
-	type: z.string(),
+	subType: z.string(),
 	date: z.string(),
 })
 

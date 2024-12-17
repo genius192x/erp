@@ -9,6 +9,7 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command'
+import { ReloadIcon } from '@radix-icons/vue'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import {
@@ -40,9 +41,9 @@ function getTypes() {
   let result = []
   if (tableStore.table) {
 		tableStore.table.forEach(element => {
-			if (element.categoryType) {
-				if (!result.find(x => x.value.toLowerCase() === element.categoryType.toLowerCase())) {
-					result.push({value: element.categoryType, label: element.categoryType || 'Не указано' })
+			if (element.subType) {
+				if (!result.find(x => x.value.toLowerCase() === element.subType.toLowerCase())) {
+					result.push({value: element.subType, label: element.subType || 'Не указано' })
 				}
 			}
     });
@@ -64,7 +65,7 @@ const openResponsible = ref(false)
 const openAgent = ref(false)
 const dateValue = ref()
 const placeholder = ref()
-
+const loading = ref(false)
 const responsible = [
   { label: 'Иванов Иван Иванович', value: 'Иванов Иван Иванович' },
   { label: 'Антонов Антон Антонович', value: 'Антонов Антон Антонович' },
@@ -122,17 +123,34 @@ const accountFormSchema = toTypedSchema(z.object({
 
 
 
-const { handleSubmit, setFieldValue, resetForm } = useForm({
+const { handleSubmit, setFieldValue, resetForm} = useForm({
   validationSchema: accountFormSchema,
 })
 
 const onSubmit = handleSubmit((values) => {
+  loading.value = true;
 	values.categoryType = values.type
 	values.monthCount = monthCount.value
 	values.year = year.value
 	values.paymentType = props.type === 'Доход' ? 'Поступление' : 'Выбытие'
-	tableStore.updateDocument(values)
+  tableStore.updateDocument(values).then(() => {
+    openAlert.value = true;
+  }).finally(() => {
+    loading.value = false;
+  })
 })
+const openAlert = ref(false)
+const openModal = ref(false)
+
+function closeAll() {
+  openAlert.value = false;
+  openModal.value = false
+}
+
+function closeAlert() {
+  openAlert.value = false;
+  resetForm()
+}
 
 function reset() {
 	resetForm()
@@ -148,12 +166,12 @@ function reset() {
 </script>
 
 <template>
-	<Dialog>
+	<Dialog :open="openModal">
 		<DialogTrigger as-child>
 			<Button
 				variant="secondary"
 				class="h-8 px-2 lg:px-3"
-				@click="console.log('Добавить доход')"
+				@click="openModal = true"
 			>
 				{{ props.type }}
 				<Plus class="ml-2 h-4 w-4"/>
@@ -516,12 +534,37 @@ function reset() {
 
 
 				<div class="flex gap-3 justify-end">
-					<Button type="submit">
-						Добавить платеж
-					</Button>
-					<Button type="submit" variant="outline" @click="reset">
-						Сбросить
-					</Button>
+          <DialogClose as-child @click="closeAll">
+            <Button type="button" variant="ghost">
+              Закрыть
+            </Button>
+          </DialogClose>
+          <Dialog :open="openAlert">
+            <DialogTrigger as-child>
+              <Button type="submit" :disabled="loading">
+                <ReloadIcon class="w-4 h-4 mr-2 animate-spin" v-if="loading" />
+                {{ loading ? 'Добавляем платеж...' : 'Добавить платеж' }}
+              </Button>
+            </DialogTrigger>
+            <DialogContent class="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle>Платеж добавлен</DialogTitle>
+                <DialogDescription>
+                  Хотите внести еще платеж?
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter class="sm:justify-start">
+                <Button type="button" variant="secondary" @click="closeAlert">
+                  Внести еще
+                </Button>
+                <DialogClose as-child @click="closeAll">
+                  <Button type="button" variant="secondary">
+                    Закрыть
+                  </Button>
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
 				</div>
 			</Form>
 		</DialogContent>

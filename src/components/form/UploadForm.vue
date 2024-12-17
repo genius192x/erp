@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import readXlsxFile from 'read-excel-file'
-import { useTableStore } from '@/store/TableStore.js'
 import { gsap } from 'gsap'
 import { ref } from 'vue';
+import { useTableStore } from '@/store/TableStore.js'
 
 const tableStore = useTableStore()
 
@@ -11,7 +11,7 @@ const isLoading = ref(false)
 function showFile(e) {
 	console.log(e.target);
   isLoading.value = true;
-	readXlsxFile(e.target.files[0], { sheet: 3 }).then((rows) => {
+	readXlsxFile(e.target.files[0], { sheet: 1 }).then((rows) => {
 		tableStore.stats = rows
 		tableStore.rowsItems = rows
 		tableStore.createDocument(tableStore.rowsItems)

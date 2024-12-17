@@ -2,7 +2,9 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import { useGlobalStore } from '@/store/GlobalStore'
 import { storeToRefs } from 'pinia'
 import DashBoardView from '@/pages/DashBoard.vue'
-import TasksView from '@/pages/Tasks.vue'
+import OperationsView from '@/pages/Operations.vue'
+import TransactionsView from '@/pages/Transactions.vue'
+import TransactionsPiUView from '@/pages/TransactionsPiU.vue'
 import SettingAccount from "@/pages/settings/SettingAccount.vue"
 import SettingAppearance from "@/pages/settings/SettingAppearance.vue"
 import SettingDisplay from "@/pages/settings/SettingDisplay.vue"
@@ -26,8 +28,16 @@ const routes = [
 		component: Registration,
 	},
 	{
-		path: '/tasks',
-		component: TasksView,
+		path: '/operations',
+		component: OperationsView,
+	},
+	{
+		path: '/transactions',
+		component: TransactionsView,
+	},
+	{
+		path: '/transactions-piu',
+		component: TransactionsPiUView,
 	},
 	{
 		path: '/settings',

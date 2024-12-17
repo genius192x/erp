@@ -55,6 +55,7 @@ import {
 	BadgeCheck,
 	Bell,
 	BookOpen,
+	FileSpreadsheet,
 	Bot,
 	ChevronRight,
 	ChevronsUpDown,
@@ -115,17 +116,18 @@ const data = {
 	],
 	navMain: [
 		{
-			title: 'Операции',
+			title: 'Отчеты',
 			url: '#',
 			icon: Banknote,
 			items: [
 				{
-					title: 'Операции ДДС',
-					url: '/tasks',
+					title: 'Отчет ДДС',
+					url: '/transactions',
 				},
 				{
-					title: 'Операции ПиУ',
-					url: '#',
+					title: 'Отчет ПиУ',
+					url: '/transactions-piu',
+
 				},
 			],
 		},
@@ -229,6 +231,14 @@ function setActiveTeam(team: typeof data.teams[number]) {
 								</router-link>
 							</SidebarMenuButton>
 						</SidebarMenuItem>
+						<SidebarMenuItem>
+							<SidebarMenuButton :tooltip="'Операции'" as-child>
+								<router-link to="/operations">
+									<component :is="FileSpreadsheet" />
+									<span>Операции</span>
+								</router-link>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
 					</SidebarMenu>
 				</SidebarGroup>
 				<SidebarGroup>
@@ -249,9 +259,10 @@ function setActiveTeam(team: typeof data.teams[number]) {
 									<SidebarMenuSub>
 										<SidebarMenuSubItem v-for="subItem in item.items" :key="subItem.title">
 											<SidebarMenuSubButton as-child>
-												<a :href="subItem.url">
+												<router-link :to="subItem.url" :disabled="subItem.disabled">
+													<!-- <component :is="Home" /> -->
 													<span>{{ subItem.title }}</span>
-												</a>
+												</router-link>
 											</SidebarMenuSubButton>
 										</SidebarMenuSubItem>
 									</SidebarMenuSub>

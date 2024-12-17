@@ -2,7 +2,7 @@
 import type { Column } from '@tanstack/vue-table'
 import type { Component } from 'vue'
 import { computed } from 'vue'
-import type { Task } from '@/lib/schema'
+import type { Task } from './lib/schema'
 import {PlusCircledIcon} from '@radix-icons/vue'
 import {CheckIcon} from '@radix-icons/vue'
 
@@ -16,7 +16,7 @@ import {
 	PopoverTrigger,
 } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
-import { cn } from '@/lib/utils'
+import { cn } from './lib/utils'
 
 interface DataTableFacetedFilter {
 	column?: Column<Task, any>

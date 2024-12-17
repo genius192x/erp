@@ -3,6 +3,7 @@ import Sheet from '@/components/ui/sheet/Sheet.vue';
 import SheetContent from '@/components/ui/sheet/SheetContent.vue';
 import { cn } from '@/lib/utils';
 import { SIDEBAR_WIDTH_MOBILE, useSidebar } from './utils';
+import { computed } from 'vue';
 
 defineOptions({
   inheritAttrs: false,
@@ -14,6 +15,10 @@ const props = defineProps({
   collapsible: { type: String, required: false, default: 'offcanvas' },
   class: { type: null, required: false },
 });
+
+const mobile = computed(() => {
+	return window.innerWidth < 768;
+})
 
 const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
 </script>
@@ -33,7 +38,7 @@ const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
   </div>
 
   <Sheet
-    v-else-if="isMobile"
+    v-else-if="mobile"
     :open="openMobile"
     v-bind="$attrs"
     @update:open="setOpenMobile"
@@ -41,7 +46,7 @@ const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
     <SheetContent
       data-sidebar="sidebar"
       data-mobile="true"
-      class="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+      class="w-[--sidebar-width] bg-white p-0 text-sidebar-foreground [&>button]:hidden"
       :style="{
         '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
       }"

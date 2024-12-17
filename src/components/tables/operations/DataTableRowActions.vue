@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { Row } from '@tanstack/vue-table'
 import { computed } from 'vue'
-import { labels } from '@/lib/data'
-import { taskSchema } from '@/lib/schema'
-import type { Task } from '@/lib/schema'
+import { labels } from './lib/data'
+import { taskSchema } from './lib/schema'
+import type { Task } from './lib/schema'
 import {DotsHorizontalIcon} from '@radix-icons/vue'
 
 import { Button } from '@/components/ui/button'
